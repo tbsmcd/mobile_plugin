@@ -57,7 +57,7 @@ class MobileComponent extends Object {
 	}
 	
 	function getUnicodeToEmoji($carrier = null) {
-		App::import('Model', 'mobile_kit.emoji');
+		App::import('Model', 'mobile_plugin.emoji');
 		$Emoji = new Emoji;
 		$carrierFields = array(
 			'docomo' => 'docomo_sjis',
@@ -132,7 +132,7 @@ class MobileComponent extends Object {
 	}
 	
 	function inputConvert($input = null) {
-		App::import('Model', 'mobile_kit.emoji');
+		App::import('Model', 'mobile_plugin.emoji');
 		$Emoji = new Emoji;
 		$carrier = $this->carrier;
 		if (is_array($input)) {
