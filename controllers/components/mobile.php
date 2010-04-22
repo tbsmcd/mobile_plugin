@@ -20,7 +20,7 @@ class MobileComponent extends Object {
 		$this->resolution = $this->getResolution($carrier);
 		$this->unicodeToEmoji = $this->getUnicodeToEmoji($carrier);
 		
-		if (true == $this->useMobileSession && $carrier != 'PC') {
+		if (true == $this->useMobileSession /*&& $carrier != 'PC'*/) {
 			$this->_setMobileSession();
 		}
 	}
