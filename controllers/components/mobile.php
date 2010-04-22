@@ -2,6 +2,7 @@
 class MobileComponent extends Object {
 	public $userAgent = null;
 	public $carrier = null;
+	public $useMobileSession = true;
 	public $resolution = array(240, 320);
 	
 	public $_agents = array(
@@ -18,6 +19,10 @@ class MobileComponent extends Object {
 		$this->carrier = $carrier = $this->getCarrier($userAgent);
 		$this->resolution = $this->getResolution($carrier);
 		$this->unicodeToEmoji = $this->getUnicodeToEmoji($carrier);
+		
+		if (true == $this->useMobileSession && $carrier != 'PC') {
+			$this->_setMobileSession();
+		}
 	}
 	
 	function getCarrier($userAgent = null) {
@@ -175,6 +180,17 @@ class MobileComponent extends Object {
 			$output = preg_replace('/BAD\+([0-9A-F]{4})/', '', $output);
 		}
 		return $output;
+	}
+	
+	function _setMobileSession() {
+		if (!isset($_SESSION)) {
+			Configure::write('Session.save', 'mplugin');
+			ini_set('session.use_trans_sid', 1);//上手く行かない...
+			ini_set('session.use_only_cookies', 0);
+			ini_set('session.use_cookies', 0);
+			ini_set('session.name', 'mplugin');
+			debug(ini_get('url_rewriter.tags'));
+		}
 	}
 }
 ?>
