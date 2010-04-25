@@ -19,10 +19,11 @@ class MobileComponent extends Object {
 		$this->carrier = $carrier = $this->getCarrier($userAgent);
 		$this->resolution = $this->getResolution($carrier);
 		$this->unicodeToEmoji = $this->getUnicodeToEmoji($carrier);
-		
-		if (true == $this->useMobileSession /*&& $carrier != 'PC'*/) {
+		/*
+		if (true == $this->useMobileSession ) {
 			$this->__setMobileSession();
 		}
+		*/
 	}
 	
 	function getCarrier($userAgent = null) {
@@ -182,6 +183,7 @@ class MobileComponent extends Object {
 		return $output;
 	}
 	
+	/*
 	function __setMobileSession() {
 	
 		if (!isset($_SESSION)) {
@@ -192,7 +194,7 @@ class MobileComponent extends Object {
 			ini_set('session.name', 'mplugin');
 			ini_set('session.auto_start', 0);
 		}
-	
 	}
+	*/
 }
 ?>
