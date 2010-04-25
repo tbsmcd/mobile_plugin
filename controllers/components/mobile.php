@@ -21,7 +21,7 @@ class MobileComponent extends Object {
 		$this->unicodeToEmoji = $this->getUnicodeToEmoji($carrier);
 		
 		if (true == $this->useMobileSession /*&& $carrier != 'PC'*/) {
-			$this->_setMobileSession();
+			$this->__setMobileSession();
 		}
 	}
 	
@@ -182,15 +182,17 @@ class MobileComponent extends Object {
 		return $output;
 	}
 	
-	function _setMobileSession() {
+	function __setMobileSession() {
+	
 		if (!isset($_SESSION)) {
 			Configure::write('Session.save', 'mplugin');
 			ini_set('session.use_trans_sid', 1);//上手く行かない...
 			ini_set('session.use_only_cookies', 0);
 			ini_set('session.use_cookies', 0);
 			ini_set('session.name', 'mplugin');
-			debug(ini_get('url_rewriter.tags'));
+			ini_set('session.auto_start', 0);
 		}
+	
 	}
 }
 ?>

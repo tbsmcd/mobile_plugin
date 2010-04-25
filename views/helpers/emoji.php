@@ -20,6 +20,22 @@ class EmojiHelper extends AppHelper {
 			echo $out;
 		}
 	}
+	
+	function addSid($mode = null) {
+		if (!is_null($mode)) {
+			if ($mode == 'd') {
+				if ($this->carrier == 'docomo') {
+					return '?' . session_name() . '=' . session_id();
+				}
+			} elseif ($mode == 'm') {
+				if ($this->carrier == 'docomo' || $this->carrier == 'kddi' || $this->carrier == 'softbank') {
+					return '?' . session_name() . '=' . session_id();
+				}
+			} elseif ($mode == 'a') {
+				return '?' . session_name() . '=' . session_id();
+			}
+		}
+	}
 
 }
 
