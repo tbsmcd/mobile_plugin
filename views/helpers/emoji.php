@@ -2,9 +2,12 @@
 class EmojiHelper extends AppHelper {
 	public $unicode2Emoji = null;
 	public $carrier = null;
+	/*
 	//docomo:use use_trans_sid only for DOCOMO.
 	//mobile:use_trans_sid only for Mobile(Keitai).
-	//all:use_trans_sid for all.
+	//all   :use_trans_sid for all.
+	//null  :not use_trans_sid.
+	*/
 	
 	public $sidMode = null;
 	
@@ -38,7 +41,11 @@ class EmojiHelper extends AppHelper {
 				}
 			} elseif ($this->sidMode == 'all') {
 				return '?' . session_name() . '=' . session_id();
-			}
+			}/* elseif ($this->sidMode == 'none') {
+				return null;
+			}*/
+		} else {
+			return null;
 		}
 	}
 

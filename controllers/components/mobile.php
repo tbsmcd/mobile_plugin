@@ -5,6 +5,17 @@ class MobileComponent extends Object {
 	public $useMobileSession = true;
 	public $resolution = array(240, 320);
 	
+	//public $viewLayoutMode = null;
+	public $viewLayoutMode = 'all';
+	/*
+	//none:   Not change views and layouts.
+	//mobile: Chenge views and layouts only for mobile(keitai).
+	//all:    Chenge views and layouts only for all.
+	*/
+	//public $viewDirectory = null;
+	public $viewDirectory = 'mobile';
+	public $layoutFile = 'mobile';
+	
 	public $_agents = array(
 			'docomo' => array('/^DoCoMo.+$/'),
 			'kddi' => array('/^KDDI.+UP.Browser.+$/', '/^UP.Browser.+$/'),
@@ -19,11 +30,6 @@ class MobileComponent extends Object {
 		$this->carrier = $carrier = $this->getCarrier($userAgent);
 		$this->resolution = $this->getResolution($carrier);
 		$this->unicodeToEmoji = $this->getUnicodeToEmoji($carrier);
-		/*
-		if (true == $this->useMobileSession ) {
-			$this->__setMobileSession();
-		}
-		*/
 	}
 	
 	function getCarrier($userAgent = null) {
@@ -183,18 +189,40 @@ class MobileComponent extends Object {
 		return $output;
 	}
 	
-	/*
-	function __setMobileSession() {
-	
-		if (!isset($_SESSION)) {
-			Configure::write('Session.save', 'mplugin');
-			ini_set('session.use_trans_sid', 1);//上手く行かない...
-			ini_set('session.use_only_cookies', 0);
-			ini_set('session.use_cookies', 0);
-			ini_set('session.name', 'mplugin');
-			ini_set('session.auto_start', 0);
+	function changeView() {
+		if (is_null($this->viewLayoutMode)) {
+			return false;
+		} else {
+			if ($this->viewLayoutMode == 'all') {
+				return '/' . $this->viewDirectory;
+			} elseif ($this->viewLayoutMode == 'mobile') {
+				if ($this->carrier == 'docomo' || $this->carrier == 'kddi' || $this->carrier == 'softbank' ) {
+					return '/' . $this->viewDirectory;
+				} else {
+					return;
+				}
+			} elseif ($this->viewLayoutMode == 'none') {
+				return;
+			}
 		}
 	}
-	*/
+	
+	function changeLayout() {
+		if (is_null($this->viewLayoutMode)) {
+			return false;
+		} else {
+			if ($this->viewLayoutMode == 'all') {
+				return $this->layoutFile;
+			} elseif ($this->viewLayoutMode == 'mobile') {
+				if ($this->carrier == 'docomo' || $this->carrier == 'kddi' || $this->carrier == 'softbank' ) {
+					return $this->layoutFile;
+				} else {
+					return;
+				}
+			} elseif ($this->viewLayoutMode == 'none') {
+				return;
+			}
+		}
+	}
 }
 ?>
