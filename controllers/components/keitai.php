@@ -62,7 +62,7 @@ class KeitaiComponent extends Object {
 		if (2 === count($_resolution)) {
 			return $_resolution;
 		} else {
-			return $resolution;
+			return $_resolution;
 		}
 	}
 	
@@ -157,7 +157,7 @@ class KeitaiComponent extends Object {
 			);
 			$field = $carrierFields[$carrier];
 			$cacheName = $field . 'ToUnicodes';
-			if (!$emoijsAndUnicodes = Cache::read($cacheName)) {
+			if (!$emojisAndUnicodes = Cache::read($cacheName)) {
 				$tmpArray = $Emoji->find('all', array('fields' => array('id', $field)));
 				$unicodes = Set::extract('/Emoji/id', $tmpArray);
 				foreach ($unicodes as $value) {
